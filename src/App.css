@@ -1,17 +1,27 @@
 #root {
+  margin: 0 auto;
   min-width: 80%;
   height: 100vh;
 }
 
 .board {
+  border: 10px solid gray;
   width: 100%;
   display: flex;
 }
 
-.square {
+.white {
+  background-color: white;
+  color: black;
+}
+
+.black {
   background-color: black;
-  height: 50px;
   color: white;
+}
+
+.square {
+  height: 50px;
 }
 
 .file {
