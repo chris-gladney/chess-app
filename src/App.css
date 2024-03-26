@@ -5,6 +5,7 @@
 }
 
 .board {
+  box-sizing: border-box;
   border: 10px solid gray;
   width: 100%;
   display: flex;
