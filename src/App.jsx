@@ -1,15 +1,14 @@
-import { useState } from 'react'
-import './App.css'
-import Board from './Board'
+import { useState } from "react";
+import "./App.css";
+import Game from "./Game";
 
 function App() {
-  const [count, setCount] = useState(0)
 
   return (
     <>
-      <Board />
+      <Game />
     </>
-  )
+  );
 }
 
-export default App
+export default App;
