@@ -6,7 +6,19 @@ function Board() {
   return (
     <div className="board">
       {letterSquares.map((file) => {
-        return <File key={file} letterSquare={file} />;
+        let colorSquareStart = "";
+        if (letterSquares.indexOf(file) % 2 === 0) {
+          colorSquareStart = "white";
+        } else {
+          colorSquareStart = "black";
+        }
+        return (
+          <File
+            key={file}
+            letterSquare={file}
+            colorSquareStart={colorSquareStart}
+          />
+        );
       })}
     </div>
   );
