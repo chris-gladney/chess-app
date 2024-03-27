@@ -1,5 +1,6 @@
 import { PiecesContext } from "./Game";
 import { useContext, useEffect, useState } from "react";
+import Piece from "./Piece";
 
 function Square({ letterSquare, numberSquare, colorStart }) {
   const { pieces, setPieces } = useContext(PiecesContext);
@@ -8,16 +9,22 @@ function Square({ letterSquare, numberSquare, colorStart }) {
   useEffect(() => {
     pieces.forEach((piece) => {
       if (piece.square === `${letterSquare}${numberSquare}`) {
-        setOccupied(piece.piece);
+        setOccupied({ piece: piece.piece, decimalCode: piece.decimalCode });
       }
     });
   }, []);
 
   return (
     <div
-      className={`${colorStart} square ${occupied ? occupied : ""} ${letterSquare}${numberSquare}`}
+      className={`${colorStart} square ${
+        occupied ? occupied.piece : ""
+      } ${occupied ? "used" : "unused"} ${letterSquare}${numberSquare}`}
     >
-      <p>{occupied}</p>
+      {occupied ? (
+        <Piece HTMLdecimal={occupied.decimalCode} piece={occupied.piece} />
+      ) : (
+        ""
+      )}
     </div>
   );
 }
