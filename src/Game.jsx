@@ -1,6 +1,6 @@
 import { createContext, useState } from "react";
 import Board from "./Board";
-import piecesInfo from "../utils/utils";
+import piecesInfo from "../utils/piecesInfo";
 
 export const PiecesContext = createContext(null);
 
