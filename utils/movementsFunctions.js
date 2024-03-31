@@ -2,22 +2,89 @@ import piecesInfo from "./piecesInfo";
 
 // The pieceObject parametre is in the form of an object from the piecesInfo Array in utils
 export function calculateSpacesWhiteCanMove(pieceObject) {
-  const blackOccupiedSpaces = [];
-  const whiteOccupiedSpaces = [];
-  for (let i = 0; i < piecesInfo.length; i++) {
-    if (piecesInfo[i].piece.slice(0, 5) === "black") {
-      blackOccupiedSpaces.push(piecesInfo[i].square);
-    } else if (piecesInfo[i].piece.slice(0, 5) === "white") {
-      whiteOccupiedSpaces.push(piecesInfo[i].square);
+  const currentSquare = pieceObject.square;
+
+  const files = ["A", "B", "C", "D", "E", "F", "G", "H"];
+
+  const occupiedSquares = [];
+  const blackOccupiedSquares = [];
+
+  piecesInfo.forEach((piece) => {
+    occupiedSquares.push(piece.square);
+    if (piece.piece.slice(0, 5) === "black") {
+      blackOccupiedSquares.push(piece.square);
+    }
+  });
+
+  const emptySquares = [];
+
+  for (let file = 0; file < files.length; file++) {
+    for (let number = 1; number < 9; number++) {
+      if (!occupiedSquares.includes(`${files[file]}${number}`)) {
+        emptySquares.push(`${files[file]}${number}`);
+      }
     }
   }
 
-  const currentSquareSelectedPiece = pieceObject.square;
+  if (pieceObject.piece === "white-pawn") {
+    const squaresToCheckNotTaking = [];
+    const squaresToCheckTaking = [];
 
-  if (pieceObject.piece === "white-pawn" && !pieceObject.hasMoved) {
-    return [
-      pieceObject.square[0] + (Number(pieceObject.square[1]) + 1),
-      pieceObject.square[0] + (Number(pieceObject.square[1]) + 2),
-    ];
+    if (Number(currentSquare[1]) < 9) {
+      squaresToCheckNotTaking.push(
+        currentSquare[0] + (Number(currentSquare[1]) + 1)
+      );
+    }
+
+    if (Number(currentSquare[1]) < 9) {
+      squaresToCheckNotTaking.push(
+        currentSquare[0] + (Number(currentSquare[1]) + 2)
+      );
+    }
+
+    if (
+      files.indexOf(currentSquare[0]) - 1 > 0 &&
+      Number(currentSquare[1]) < 9
+    ) {
+      squaresToCheckTaking.push(
+        `${files[files.indexOf(currentSquare[0]) - 1]}${(
+          Number(currentSquare[1]) + 1
+        ).toString()}`
+      );
+    }
+
+    if (
+      files.indexOf(currentSquare[0]) + 1 < 8 &&
+      Number(currentSquare[1]) < 9
+    ) {
+      squaresToCheckTaking.push(
+        `${files[files.indexOf(currentSquare[0]) + 1]}${(
+          Number(currentSquare[1]) + 1
+        ).toString()}`
+      );
+    }
+
+    console.log(squaresToCheckNotTaking, "<<< not taking");
+    console.log(squaresToCheckTaking, "<<< taking");
+  }
+
+  if (pieceObject.piece === "white-rook") {
+    console.log("rook");
+  }
+
+  if (pieceObject.piece === "white-knight") {
+    console.log("knight");
+  }
+
+  if (pieceObject.piece === "white-bishop") {
+    console.log("bishop");
+  }
+
+  if (pieceObject.piece === "white-king") {
+    console.log("king");
+  }
+
+  if (pieceObject.piece === "white-queen") {
+    console.log("queen");
   }
 }
