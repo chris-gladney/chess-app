@@ -27,6 +27,8 @@ export function calculateSpacesWhiteCanMove(pieceObject) {
   }
 
   if (pieceObject.piece === "white-pawn") {
+    const availableSquaresToReturn = [];
+
     const squaresToCheckNotTaking = [];
     const squaresToCheckTaking = [];
 
@@ -64,8 +66,21 @@ export function calculateSpacesWhiteCanMove(pieceObject) {
       );
     }
 
-    console.log(squaresToCheckNotTaking, "<<< not taking");
-    console.log(squaresToCheckTaking, "<<< taking");
+    for (const square of squaresToCheckNotTaking) {
+      if (emptySquares.includes(square)) {
+        availableSquaresToReturn.push(square);
+      } else {
+        break;
+      }
+    }
+
+    for (const square of squaresToCheckTaking) {
+      if (blackOccupiedSquares.includes(square)) {
+        availableSquaresToReturn.push(square);
+      }
+    }
+
+    return availableSquaresToReturn;
   }
 
   if (pieceObject.piece === "white-rook") {
