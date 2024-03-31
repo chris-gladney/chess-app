@@ -84,7 +84,55 @@ export function calculateSpacesWhiteCanMove(pieceObject) {
   }
 
   if (pieceObject.piece === "white-rook") {
-    console.log("rook");
+    const availableSquaresToReturn = [];
+
+    const fileSquaresToCheckToLeft = [];
+    const fileSquaresToCheckToRight = [];
+
+    const numberSquaresToCheckAsc = [];
+    const numberSquaresToCheckDes = [];
+
+    if (Number(currentSquare[1]) < 8) {
+      for (let number = Number(currentSquare[1]); number < 9; number++) {
+        numberSquaresToCheckAsc.push(`${currentSquare[0]}${number}`);
+      }
+    }
+
+    if (Number(currentSquare[1]) > 1) {
+      for (let number = Number(currentSquare[1]); number > 0; number--) {
+        numberSquaresToCheckDes.push(`${currentSquare[0]}${number}`);
+      }
+    }
+
+    if (files.indexOf(currentSquare[0]) < 8) {
+      for (let file = files.indexOf(currentSquare[0]) - 1; file > -1; file--) {
+        fileSquaresToCheckToLeft.push(
+          `${files[file]}${Number(currentSquare[1])}`
+        );
+      }
+    }
+
+    if (files.indexOf(currentSquare[0]) > -1) {
+      for (let file = files.indexOf(currentSquare[0]) + 1; file < 8; file++) {
+        fileSquaresToCheckToRight.push(
+          `${files[file]}${Number(currentSquare[1])}`
+        );
+      }
+    }
+
+    console.log(fileSquaresToCheckToRight, "<<< files to right");
+    console.log(fileSquaresToCheckToLeft, "<<< files to left");
+
+    for (let i = 0; i < numberSquaresToCheckAsc; i++) {
+      if (!occupiedSquares.includes(numberSquaresToCheckAsc[i])) {
+        availableSquaresToReturn.push(numberSquaresToCheckAsc[i]);
+      } else if (blackOccupiedSquares.includes(numberSquaresToCheckAsc[i])) {
+        availableSquaresToReturn.push(numberSquaresToCheckAsc[i]);
+        break;
+      } else {
+        break;
+      }
+    }
   }
 
   if (pieceObject.piece === "white-knight") {
