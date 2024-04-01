@@ -93,13 +93,13 @@ export function calculateSpacesWhiteCanMove(pieceObject) {
     const numberSquaresToCheckDes = [];
 
     if (Number(currentSquare[1]) < 8) {
-      for (let number = Number(currentSquare[1]); number < 9; number++) {
+      for (let number = Number(currentSquare[1]) + 1; number < 9; number++) {
         numberSquaresToCheckAsc.push(`${currentSquare[0]}${number}`);
       }
     }
 
     if (Number(currentSquare[1]) > 1) {
-      for (let number = Number(currentSquare[1]); number > 0; number--) {
+      for (let number = Number(currentSquare[1]) - 1; number > 0; number--) {
         numberSquaresToCheckDes.push(`${currentSquare[0]}${number}`);
       }
     }
@@ -120,11 +120,35 @@ export function calculateSpacesWhiteCanMove(pieceObject) {
       }
     }
 
-    console.log(fileSquaresToCheckToRight, "<<< files to right");
-    console.log(fileSquaresToCheckToLeft, "<<< files to left");
+    // console.log(fileSquaresToCheckToRight, "<<< files to right");
+    // console.log(fileSquaresToCheckToLeft, "<<< files to left");
+    // console.log(numberSquaresToCheckAsc, "<<< numbers ascending");
+    // console.log(numberSquaresToCheckDes, "<<< numbers descending");
 
-    for (let i = 0; i < numberSquaresToCheckAsc; i++) {
-      if (!occupiedSquares.includes(numberSquaresToCheckAsc[i])) {
+    for (let i = 0; i < fileSquaresToCheckToRight.length; i++) {
+      if (emptySquares.includes(fileSquaresToCheckToRight[i])) {
+        availableSquaresToReturn.push(fileSquaresToCheckToRight[i]);
+      } else if (blackOccupiedSquares.includes(fileSquaresToCheckToRight[i])) {
+        availableSquaresToReturn.push(fileSquaresToCheckToRight[i]);
+        break;
+      } else {
+        break;
+      }
+    }
+
+    for (let i = 0; i < fileSquaresToCheckToLeft.length; i++) {
+      if (emptySquares.includes(fileSquaresToCheckToLeft[i])) {
+        availableSquaresToReturn.push(fileSquaresToCheckToLeft[i]);
+      } else if (blackOccupiedSquares.includes(fileSquaresToCheckToLeft[i])) {
+        availableSquaresToReturn.push(fileSquaresToCheckToLeft[i]);
+        break;
+      } else {
+        break;
+      }
+    }
+
+    for (let i = 0; i < numberSquaresToCheckAsc.length; i++) {
+      if (emptySquares.includes(numberSquaresToCheckAsc[i])) {
         availableSquaresToReturn.push(numberSquaresToCheckAsc[i]);
       } else if (blackOccupiedSquares.includes(numberSquaresToCheckAsc[i])) {
         availableSquaresToReturn.push(numberSquaresToCheckAsc[i]);
@@ -133,6 +157,19 @@ export function calculateSpacesWhiteCanMove(pieceObject) {
         break;
       }
     }
+
+    for (let i = 0; i < numberSquaresToCheckDes.length; i++) {
+      if (emptySquares.includes(numberSquaresToCheckDes[i])) {
+        availableSquaresToReturn.push(numberSquaresToCheckDes[i]);
+      } else if (blackOccupiedSquares.includes(numberSquaresToCheckDes[i])) {
+        availableSquaresToReturn.push(numberSquaresToCheckDes[i]);
+        break;
+      } else {
+        break;
+      }
+    }
+    
+    return availableSquaresToReturn;
   }
 
   if (pieceObject.piece === "white-knight") {
