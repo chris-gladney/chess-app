@@ -168,12 +168,101 @@ export function calculateSpacesWhiteCanMove(pieceObject) {
         break;
       }
     }
-    
+
     return availableSquaresToReturn;
   }
 
   if (pieceObject.piece === "white-knight") {
-    console.log("knight");
+    const availableSquaresToReturn = [];
+
+    const squaresToCheck = [];
+
+    // Check vertically up plus left and vertically up plus right
+    if (Number(currentSquare[1]) < 7) {
+      if (files.indexOf(currentSquare[0]) > 0) {
+        squaresToCheck.push(
+          `${files[files.indexOf(currentSquare[0]) + 1]}${
+            Number(currentSquare[1]) + 2
+          }`
+        );
+      }
+
+      if (files.indexOf(currentSquare[0]) < 8) {
+        squaresToCheck.push(
+          `${files[files.indexOf(currentSquare[0]) - 1]}${
+            Number(currentSquare[1]) + 2
+          }`
+        );
+      }
+    }
+
+    // Check left two spaces and up as well as left two spaces and down
+    if (files.indexOf(currentSquare[0]) > 1) {
+      if (Number(currentSquare[1]) < 8) {
+        squaresToCheck.push(
+          `${files[files.indexOf(currentSquare[0]) - 2]}${
+            Number(currentSquare[1]) + 1
+          }`
+        );
+      }
+
+      if (Number(currentSquare[1]) > 1) {
+        squaresToCheck.push(
+          `${files[files.indexOf(currentSquare[0]) - 2]}${
+            Number(currentSquare[1]) - 1
+          }`
+        );
+      }
+    }
+
+    // Check two spaces down and left as well as two spaces down and right
+    if (Number(currentSquare[1]) > 1) {
+      if (files.indexOf(currentSquare[0]) > 0) {
+        squaresToCheck.push(
+          `${files[files.indexOf(currentSquare[0]) + 1]}${
+            Number(currentSquare[1]) - 2
+          }`
+        );
+      }
+
+      if (files.indexOf(currentSquare[0]) < 8) {
+        squaresToCheck.push(
+          `${files[files.indexOf(currentSquare[0]) - 1]}${
+            Number(currentSquare[1]) - 2
+          }`
+        );
+      }
+    }
+
+    // Check right two and up one as well as right two adn down one
+
+    if (files.indexOf(currentSquare[0]) < 6) {
+      if (Number(currentSquare[1]) < 8) {
+        squaresToCheck.push(
+          `${files[files.indexOf(currentSquare[0]) + 2]}${
+            Number(currentSquare[1]) + 1
+          }`
+        );
+      }
+
+      if (Number(currentSquare[1]) > 1) {
+        squaresToCheck.push(
+          `${files[files.indexOf(currentSquare[0]) + 2]}${
+            Number(currentSquare[1]) - 1
+          }`
+        );
+      }
+    }
+
+    for (let i = 0; i < squaresToCheck.length; i++) {
+      if (emptySquares.includes(squaresToCheck[i])) {
+        availableSquaresToReturn.push(squaresToCheck[i]);
+      } else if (blackOccupiedSquares.includes(squaresToCheck[i])) {
+        availableSquaresToReturn.push(squaresToCheck[i]);
+      }
+    }
+
+    return availableSquaresToReturn;
   }
 
   if (pieceObject.piece === "white-bishop") {
