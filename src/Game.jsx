@@ -6,8 +6,10 @@ export const PiecesContext = createContext(null);
 
 function Game() {
   const [pieces, setpieces] = useState(piecesInfo);
+  const [availableSpaces, setAvailableSpaces] = useState(false);
+  
   return (
-    <PiecesContext.Provider value={{ pieces, setpieces }}>
+    <PiecesContext.Provider value={{ pieces, setpieces, availableSpaces, setAvailableSpaces }}>
       <Board />
     </PiecesContext.Provider>
   );
