@@ -6,7 +6,7 @@ export const PiecesContext = createContext(null);
 
 function Game() {
   const [pieces, setpieces] = useState(piecesInfo);
-  const [availableSpaces, setAvailableSpaces] = useState(false);
+  const [availableSpaces, setAvailableSpaces] = useState([]);
   
   return (
     <PiecesContext.Provider value={{ pieces, setpieces, availableSpaces, setAvailableSpaces }}>
