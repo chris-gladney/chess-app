@@ -266,7 +266,128 @@ export function calculateSpacesWhiteCanMove(pieceObject) {
   }
 
   if (pieceObject.piece === "white-bishop") {
-    console.log("bishop");
+    const availableSquaresToReturn = [];
+
+    const squaresToCheckLeftUp = [];
+    const squaresToCheckRightUp = [];
+    const squaresToCheckRightDown = [];
+    const squaresToCheckLeftDown = [];
+
+    // Checking diagonally left and up
+    if (files.indexOf(currentSquare[0]) > 0 && Number(currentSquare[1]) < 8) {
+      let squareToMutate = currentSquare;
+      while (
+        files.indexOf(squareToMutate[0]) > 0 &&
+        Number(squareToMutate[1]) < 8
+      ) {
+        squaresToCheckLeftUp.push(
+          `${files[files.indexOf(squareToMutate[0]) - 1]}${
+            Number(squareToMutate[1]) + 1
+          }`
+        );
+        squareToMutate = `${files[files.indexOf(squareToMutate[0]) - 1]}${
+          Number(squareToMutate[1]) + 1
+        }`;
+      }
+    }
+
+    // Checking diagonally right and up
+    if (files.indexOf(currentSquare[0]) < 7 && Number(currentSquare[1]) < 8) {
+      let squareToMutate = currentSquare;
+      while (
+        files.indexOf(squareToMutate[0]) < 8 &&
+        Number(squareToMutate[1]) < 8
+      ) {
+        squaresToCheckRightUp.push(
+          `${files[files.indexOf(squareToMutate[0]) + 1]}${
+            Number(squareToMutate[1]) + 1
+          }`
+        );
+        squareToMutate = `${files[files.indexOf(squareToMutate[0]) + 1]}${
+          Number(squareToMutate[1]) + 1
+        }`;
+      }
+    }
+
+    // Checking diagonally right and down
+    if (files.indexOf(currentSquare[0]) < 7 && Number(currentSquare[1]) > 0) {
+      let squareToMutate = currentSquare;
+      while (
+        files.indexOf(squareToMutate[0]) < 8 &&
+        Number(squareToMutate[1]) > 1
+      ) {
+        squaresToCheckRightDown.push(
+          `${files[files.indexOf(squareToMutate[0]) + 1]}${
+            Number(squareToMutate[1]) - 1
+          }`
+        );
+        squareToMutate = `${files[files.indexOf(squareToMutate[0]) + 1]}${
+          Number(squareToMutate[1]) - 1
+        }`;
+      }
+    }
+
+    // Checking diagonally left and down
+    if (files.indexOf(currentSquare[0]) > 1 && Number(currentSquare[1]) > 0) {
+      let squareToMutate = currentSquare;
+      while (
+        files.indexOf(squareToMutate[0]) > 0 &&
+        Number(squareToMutate[1]) > 1
+      ) {
+        squaresToCheckLeftDown.push(
+          `${files[files.indexOf(squareToMutate[0]) - 1]}${
+            Number(squareToMutate[1]) - 1
+          }`
+        );
+        squareToMutate = `${files[files.indexOf(squareToMutate[0]) - 1]}${
+          Number(squareToMutate[1]) - 1
+        }`;
+      }
+    }
+
+    for (let i = 0; i < squaresToCheckLeftUp.length; i++) {
+      if (emptySquares.includes(squaresToCheckLeftUp[i])) {
+        availableSquaresToReturn.push(squaresToCheckLeftUp[i]);
+      } else if (blackOccupiedSquares.includes(squaresToCheckLeftUp[i])) {
+        availableSquaresToReturn.push(squaresToCheckLeftUp[i]);
+        break;
+      } else {
+        break;
+      }
+    }
+
+    for (let i = 0; i < squaresToCheckLeftDown.length; i++) {
+      if (emptySquares.includes(squaresToCheckLeftDown[i])) {
+        availableSquaresToReturn.push(squaresToCheckLeftDown[i]);
+      } else if (blackOccupiedSquares.includes(squaresToCheckLeftDown[i])) {
+        availableSquaresToReturn.push(squaresToCheckLeftDown[i]);
+        break;
+      } else {
+        break;
+      }
+    }
+
+    for (let i = 0; i < squaresToCheckRightUp.length; i++) {
+      if (emptySquares.includes(squaresToCheckRightUp[i])) {
+        availableSquaresToReturn.push(squaresToCheckRightUp[i]);
+      } else if (blackOccupiedSquares.includes(squaresToCheckRightUp[i])) {
+        availableSquaresToReturn.push(squaresToCheckRightUp[i]);
+        break;
+      } else {
+        break;
+      }
+    }
+
+    for (let i = 0; i < squaresToCheckRightDown.length; i++) {
+      if (emptySquares.includes(squaresToCheckRightDown[i])) {
+        availableSquaresToReturn.push(squaresToCheckRightDown[i]);
+      } else if (blackOccupiedSquares.includes(squaresToCheckRightDown[i])) {
+        availableSquaresToReturn.push(squaresToCheckRightDown[i]);
+        break;
+      } else {
+        break;
+      }
+    }
   }
 
   if (pieceObject.piece === "white-king") {
