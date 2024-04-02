@@ -4,8 +4,14 @@ import Piece from "./Piece";
 import { calculateSpacesWhiteCanMove } from "../utils/movementsFunctions";
 
 function Square({ letterSquare, numberSquare, colorStart }) {
-  const { pieces, setPieces, availableSpaces, setAvailableSpaces } =
-    useContext(PiecesContext);
+  const {
+    pieces,
+    setPieces,
+    availableSpaces,
+    setAvailableSpaces,
+    pieceObjectToMove,
+    setPieceObjectToMove,
+  } = useContext(PiecesContext);
   const [occupied, setOccupied] = useState(false);
   const [pieceInfo, setPieceInfo] = useState(null);
 
@@ -16,7 +22,7 @@ function Square({ letterSquare, numberSquare, colorStart }) {
         setPieceInfo(piece);
       }
     });
-  }, []);
+  }, [pieces]);
 
   return (
     <div
@@ -27,13 +33,34 @@ function Square({ letterSquare, numberSquare, colorStart }) {
       } square ${occupied ? occupied.piece : ""} ${
         occupied ? "used" : "unused"
       } ${letterSquare}${numberSquare}`}
-      onClick={() => {
-        if (availableSpaces.length === 0) {
-          setAvailableSpaces(calculateSpacesWhiteCanMove(pieceInfo, pieces));
-        } else {
-          setAvailableSpaces([]);
-        }
-      }}
+      onClick={
+        occupied
+          ? () => {
+              if (availableSpaces.length === 0) {
+                setAvailableSpaces(
+                  calculateSpacesWhiteCanMove(pieceInfo, pieces)
+                );
+                setPieceObjectToMove(pieceInfo);
+              } else {
+                setAvailableSpaces([]);
+                setPieceObjectToMove({});
+              }
+            }
+          : availableSpaces.includes(`${letterSquare}${numberSquare}`)
+          ? () => {
+              for (let i = 0; i < pieces.length; i++) {
+                if (pieces[i].square === pieceObjectToMove.square) {
+                  setPieces((originalPiecesArray) => {
+                    originalPiecesArray[
+                      i
+                    ].square = `${letterSquare}${numberSquare}`;
+                    return originalPiecesArray;
+                  });
+                }
+              }
+            }
+          : undefined
+      }
     >
       {occupied ? (
         <Piece HTMLdecimal={occupied.decimalCode} piece={occupied.piece} />
