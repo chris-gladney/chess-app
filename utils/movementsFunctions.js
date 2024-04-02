@@ -391,7 +391,94 @@ export function calculateSpacesWhiteCanMove(pieceObject) {
   }
 
   if (pieceObject.piece === "white-king") {
-    console.log("king");
+    const squaresToCheck = [];
+
+    const availableSquaresToReturn = [];
+
+    // Square one to left
+    if (files.indexOf(currentSquare[0]) > 0) {
+      squaresToCheck.push(
+        `${files[files.indexOf(currentSquare[0]) - 1]}${Number(
+          currentSquare[1]
+        )}`
+      );
+    }
+
+    // Square one to left and one up
+    if (files.indexOf(currentSquare[0]) > 0 && Number(currentSquare[1]) < 8) {
+      squaresToCheck.push(
+        `${files[files.indexOf(currentSquare[0]) - 1]}${
+          Number(currentSquare[1]) + 1
+        }`
+      );
+    }
+
+    // Square one up
+    if (Number(currentSquare[1]) < 8) {
+      squaresToCheck.push(
+        `${files[files.indexOf(currentSquare[0])]}${
+          Number(currentSquare[1]) + 1
+        }`
+      );
+    }
+
+    // Square one up and one right
+    if (files.indexOf(currentSquare[0]) < 7 && Number(currentSquare[1]) < 8) {
+      squaresToCheck.push(
+        `${files[files.indexOf(currentSquare[0]) + 1]}${
+          Number(currentSquare[1]) + 1
+        }`
+      );
+    }
+
+    // Square one right
+    if (files.indexOf(currentSquare[0]) < 7) {
+      squaresToCheck.push(
+        `${files[files.indexOf(currentSquare[0]) + 1]}${Number(
+          currentSquare[1]
+        )}`
+      );
+    }
+
+    // Square one right and one down
+    if (files.indexOf(currentSquare[0]) < 7 && Number(currentSquare[1] > 1)) {
+      squaresToCheck.push(
+        `${files[files.indexOf(currentSquare[0]) + 1]}${
+          Number(currentSquare[1]) - 1
+        }`
+      );
+    }
+
+    // Square one down
+    if (Number(currentSquare[1]) > 1) {
+      squaresToCheck.push(
+        `${files[files.indexOf(currentSquare[0])]}${
+          Number(currentSquare[1]) - 1
+        }`
+      );
+    }
+
+    // Square one left and one down
+    if (files.indexOf(currentSquare[0]) > 0 && Number(currentSquare[1]) > 1) {
+      squaresToCheck.push(
+        `${files[files.indexOf(currentSquare[0]) - 1]}${Number(
+          currentSquare[1] - 1
+        )}`
+      );
+    }
+
+    console.log(squaresToCheck, "<<< squares to check");
+
+    for (let i = 0; i < squaresToCheck.length; i++) {
+      if (
+        emptySquares.includes(squaresToCheck[i]) ||
+        blackOccupiedSquares.includes(squaresToCheck[i])
+      ) {
+        availableSquaresToReturn.push(squaresToCheck[i]);
+      }
+    }
+
+    return availableSquaresToReturn;
   }
 
   if (pieceObject.piece === "white-queen") {
