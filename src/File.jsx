@@ -1,6 +1,12 @@
+import { useContext, useEffect } from "react";
 import Square from "./Square";
+import { PiecesContext } from "./Game";
 
 function File({ letterSquare, colorSquareStart }) {
+  const { pieces } = useContext(PiecesContext);
+  
+  useEffect(() => {}, [pieces]);
+
   const numberSquares = [1, 2, 3, 4, 5, 6, 7, 8];
   let startingSquareOfFile = colorSquareStart;
   return (

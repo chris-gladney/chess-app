@@ -11,6 +11,8 @@ function Square({ letterSquare, numberSquare, colorStart }) {
     setAvailableSpaces,
     pieceObjectToMove,
     setPieceObjectToMove,
+    turn,
+    setTurn,
   } = useContext(PiecesContext);
   const [occupied, setOccupied] = useState(false);
   const [pieceInfo, setPieceInfo] = useState(null);
@@ -22,7 +24,7 @@ function Square({ letterSquare, numberSquare, colorStart }) {
         setPieceInfo(piece);
       }
     });
-  }, [pieces]);
+  }, [turn]);
 
   return (
     <div
@@ -48,16 +50,26 @@ function Square({ letterSquare, numberSquare, colorStart }) {
             }
           : availableSpaces.includes(`${letterSquare}${numberSquare}`)
           ? () => {
+              const pieceObjectToCompare = pieceObjectToMove;
+              setAvailableSpaces([]);
+              setPieceObjectToMove({});
               for (let i = 0; i < pieces.length; i++) {
-                if (pieces[i].square === pieceObjectToMove.square) {
-                  setPieces((originalPiecesArray) => {
-                    originalPiecesArray[
-                      i
-                    ].square = `${letterSquare}${numberSquare}`;
-                    return originalPiecesArray;
+                if (pieces[i].square === pieceObjectToCompare.square && pieceObjectToCompare.piece === pieces[i].piece) {
+                  setPieces((originalPieceArray) => {
+                    for (let j = 0; j < originalPieceArray.length; j++) {
+                      if (originalPieceArray[j].square === pieces[i].square) {
+                        originalPieceArray[
+                          j
+                        ].square = `${letterSquare}${numberSquare}`;
+                        break;
+                      }
+                    }
+                    return originalPieceArray;
                   });
+                  break;
                 }
               }
+              turn === "white" ? setTurn("black") : setTurn("white");
             }
           : undefined
       }

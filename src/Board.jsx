@@ -4,9 +4,9 @@ import { PiecesContext } from "./Game";
 
 function Board() {
   const letterSquares = ["A", "B", "C", "D", "E", "F", "G", "H"];
-  const { pieces } = useContext(PiecesContext);
+  const { pieces, turn } = useContext(PiecesContext);
 
-  useEffect(() => {}, [pieces]);
+  useEffect(() => {}, [pieces, turn]);
 
   return (
     <div className="board">
