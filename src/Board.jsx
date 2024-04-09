@@ -1,7 +1,12 @@
+import { useContext, useEffect } from "react";
 import File from "./File";
+import { PiecesContext } from "./Game";
 
 function Board() {
   const letterSquares = ["A", "B", "C", "D", "E", "F", "G", "H"];
+  const { pieces, turn } = useContext(PiecesContext);
+
+  useEffect(() => {}, [pieces, turn]);
 
   return (
     <div className="board">

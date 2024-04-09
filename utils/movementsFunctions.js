@@ -1,7 +1,5 @@
-import piecesInfo from "./piecesInfo";
-
 // The pieceObject parametre is in the form of an object from the piecesInfo Array in utils
-export function calculateSpacesWhiteCanMove(pieceObject) {
+export function calculateSpacesWhiteCanMove(pieceObject, pieces) {
   const currentSquare = pieceObject.square;
 
   const files = ["A", "B", "C", "D", "E", "F", "G", "H"];
@@ -9,7 +7,7 @@ export function calculateSpacesWhiteCanMove(pieceObject) {
   const occupiedSquares = [];
   const blackOccupiedSquares = [];
 
-  piecesInfo.forEach((piece) => {
+  pieces.forEach((piece) => {
     occupiedSquares.push(piece.square);
     if (piece.piece.slice(0, 5) === "black") {
       blackOccupiedSquares.push(piece.square);

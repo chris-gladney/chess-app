@@ -21,6 +21,10 @@
   background-color: gray;
 }
 
+.available-to-move {
+  background-color: rgba(0, 0, 255, 0.405);
+}
+
 .square {
   aspect-ratio: 1/1;
 }
