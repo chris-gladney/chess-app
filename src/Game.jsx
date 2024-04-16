@@ -1,15 +1,17 @@
-import { createContext, useState } from "react";
+import { createContext, useEffect, useState } from "react";
 import Board from "./Board";
-import piecesInfo from "../utils/piecesInfo";
+import squaresInfo from "../utils/squaresInfo";
 
 export const PiecesContext = createContext(null);
 
 function Game() {
-  const [pieces, setpieces] = useState(piecesInfo);
-  const [availableSpaces, setAvailableSpaces] = useState(false);
+  const [squares, setSquares] = useState(squaresInfo);
+  const [turn, setTurn] = useState("white");
   
+  useEffect(() => {}, [squares]);
+
   return (
-    <PiecesContext.Provider value={{ pieces, setpieces, availableSpaces, setAvailableSpaces }}>
+    <PiecesContext.Provider value={{ squares, setSquares, turn, setTurn }}>
       <Board />
     </PiecesContext.Provider>
   );

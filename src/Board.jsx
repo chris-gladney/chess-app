@@ -1,22 +1,31 @@
-import File from "./File";
+import { useContext, useEffect } from "react";
+import { PiecesContext } from "./Game";
+import Square from "./Square";
 
 function Board() {
-  const letterSquares = ["A", "B", "C", "D", "E", "F", "G", "H"];
+  const { squares, setSquares } = useContext(PiecesContext);
+
+  useEffect(() => {}, [squares]);
+  let colorToStart = "black";
 
   return (
     <div className="board">
-      {letterSquares.map((file) => {
-        let colorSquareStart = "";
-        if (letterSquares.indexOf(file) % 2 === 0) {
-          colorSquareStart = "black";
-        } else {
-          colorSquareStart = "white";
+      {Object.keys(squares).map((square) => {
+        const colorToStartClone = colorToStart;
+        if (colorToStart === "white" && square[1] !== "8") {
+          colorToStart = "black";
+        } else if (colorToStart === "black" && square[1] !== "8") {
+          colorToStart = "white";
+        } else if (colorToStart === "white" && square[1] === "8") {
+          colorToStart = "white";
+        } else if (colorToStart === "black" && square[1] === "8") {
+          colorToStart = "black";
         }
         return (
-          <File
-            key={file}
-            letterSquare={file}
-            colorSquareStart={colorSquareStart}
+          <Square
+            key={square}
+            square={square}
+            squareColor={colorToStartClone === "black" ? "black" : "white"}
           />
         );
       })}
