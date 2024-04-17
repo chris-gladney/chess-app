@@ -3,9 +3,10 @@ import { PiecesContext } from "./Game";
 import Square from "./Square";
 
 function Board() {
-  const { squares, setSquares } = useContext(PiecesContext);
+  const { squares } = useContext(PiecesContext);
 
   useEffect(() => {}, [squares]);
+
   let colorToStart = "black";
 
   return (
