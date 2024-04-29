@@ -3,7 +3,6 @@ import { PiecesContext } from "./Game";
 
 function Square({ square, squareColor }) {
   const { squares } = useContext(PiecesContext);
-  console.log(squares[square].occupied);
   return (
     <div className={`${squareColor}-square`}>
       {square[0] === "A" || square[1] === "1" ? (
@@ -11,6 +10,7 @@ function Square({ square, squareColor }) {
       ) : (
         ""
       )}
+      {squares[square].occupied ? <p>{squares[square].occupied}</p> : ""}
     </div>
   );
 }
