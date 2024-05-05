@@ -7,11 +7,21 @@ export const PiecesContext = createContext(null);
 function Game() {
   const [squares, setSquares] = useState(squaresInfo);
   const [turn, setTurn] = useState("white");
-  
+  const [previewMoves, setPreviewMoves] = useState([]);
+
   useEffect(() => {}, [squares]);
 
   return (
-    <PiecesContext.Provider value={{ squares, setSquares, turn, setTurn }}>
+    <PiecesContext.Provider
+      value={{
+        squares,
+        setSquares,
+        turn,
+        setTurn,
+        previewMoves,
+        setPreviewMoves,
+      }}
+    >
       <Board />
     </PiecesContext.Provider>
   );

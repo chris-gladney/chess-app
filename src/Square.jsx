@@ -1,7 +1,8 @@
 import { useContext } from "react";
 import { PiecesContext } from "./Game";
 import {
-  pawnMovement,
+  whitePawnMovement,
+  blackPawnMovement,
   rookMovement,
   knightMovement,
   bishopMovement,
@@ -21,10 +22,36 @@ function Square({ square, squareColor }) {
       {squares[square].occupied ? (
         <p
           onClick={
-            squares[square].occupied.slice(6, 10) === "pawn"
+            squares[square].occupied.slice(6, 10) === "pawn" &&
+            squares[square].occupied.slice(0, 5) === "white"
               ? () => {
-                pawnMovement()
-              }
+                  whitePawnMovement(square, squares[square], squares);
+                }
+              : squares[square].occupied.slice(6, 10) === "pawn" &&
+                squares[square].occupied.slice(0, 5) === "black"
+              ? () => {
+                  blackPawnMovement();
+                }
+              : squares[square].occupied.slice(6, 10) === "rook"
+              ? () => {
+                  rookMovement();
+                }
+              : squares[square].occupied.slice(6, 12) === "knight"
+              ? () => {
+                  knightMovement();
+                }
+              : squares[square].occupied.slice(6, 12) === "bishop"
+              ? () => {
+                  bishopMovement();
+                }
+              : squares[square].occupied.slice(6, 11) === "queen"
+              ? () => {
+                  queenMovement();
+                }
+              : squares[square].occupied.slice(6, 10) === "king"
+              ? () => {
+                  kingMovement();
+                }
               : undefined
           }
         >
