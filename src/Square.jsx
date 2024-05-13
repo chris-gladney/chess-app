@@ -11,9 +11,26 @@ import {
 } from "../utils/movementsFunctions";
 
 function Square({ square, squareColor }) {
-  const { squares } = useContext(PiecesContext);
+  const {
+    squares,
+    setSquares,
+    previewMoves,
+    setPreviewMoves,
+    turn,
+    setTurn,
+    previewSquares,
+    setPreviewSquares,
+  } = useContext(PiecesContext);
+
   return (
-    <div className={`${squareColor}-square`}>
+    <div
+      className={
+        previewSquares.includes(square)
+          ? `${squareColor}-square preview-square`
+          : `${squareColor}-square`
+      }
+      onClick={previewSquares.includes(square) ? () => {} : undefined}
+    >
       {square[0] === "A" || square[1] === "1" ? (
         <p className="square-coordinate">{square}</p>
       ) : (
@@ -25,7 +42,21 @@ function Square({ square, squareColor }) {
             squares[square].occupied.slice(6, 10) === "pawn" &&
             squares[square].occupied.slice(0, 5) === "white"
               ? () => {
-                  whitePawnMovement(square, squares[square], squares);
+                  const previewMovesArray = [];
+                  const previewSquaresArray = [];
+                  whitePawnMovement(square, squares[square], squares).forEach(
+                    (moveObject) => {
+                      previewMovesArray.push(moveObject);
+                      previewSquaresArray.push(moveObject.move);
+                    }
+                  );
+                  if (previewMoves.length > 0) {
+                    setPreviewMoves([]);
+                    setPreviewSquares([]);
+                  } else {
+                    setPreviewMoves(previewMovesArray);
+                    setPreviewSquares(previewSquaresArray);
+                  }
                 }
               : squares[square].occupied.slice(6, 10) === "pawn" &&
                 squares[square].occupied.slice(0, 5) === "black"
@@ -58,7 +89,24 @@ function Square({ square, squareColor }) {
           {squares[square].occupied}
         </p>
       ) : (
-        ""
+        <div
+          className="unoccupied-square"
+          onClick={
+            previewSquares.includes(square)
+              ? () => {
+                  previewMoves.forEach((moveObject) => {
+                    if (moveObject.move === square) {
+                      moveObject.squaresToUpdate.forEach((square) => {
+                        // setSquares((prevSquaresArray) => {
+                        // })
+                      });
+                    }
+                  });
+                  console.log(previewMoves[0].squaresToUpdate);
+                }
+              : undefined
+          }
+        ></div>
       )}
     </div>
   );

@@ -8,6 +8,7 @@ function Game() {
   const [squares, setSquares] = useState(squaresInfo);
   const [turn, setTurn] = useState("white");
   const [previewMoves, setPreviewMoves] = useState([]);
+  const [previewSquares, setPreviewSquares] = useState([]);
 
   useEffect(() => {}, [squares]);
 
@@ -20,6 +21,8 @@ function Game() {
         setTurn,
         previewMoves,
         setPreviewMoves,
+        previewSquares,
+        setPreviewSquares,
       }}
     >
       <Board />
