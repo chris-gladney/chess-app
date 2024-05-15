@@ -60,7 +60,7 @@ export const whitePawnMovement = (square, squareObject, squares) => {
         {
           square: `${specialMove[0]}${Number(specialMove[1]) - 1}`,
           occupied: false,
-          specialMoves: ["en passant"],
+          specialMoves: ["en passant for white"],
         },
       ],
     });
@@ -148,7 +148,7 @@ export const whitePawnMovement = (square, squareObject, squares) => {
   for (const move of movesTakingToCheck) {
     if (
       blackOccupiedSpaces.includes(move.move) ||
-      squares[move.move].specialMoves.includes("en passant")
+      squares[move.move].specialMoves.includes("en passant for black")
     ) {
       availableMoves.push(move);
     }
