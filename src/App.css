@@ -31,6 +31,10 @@ has, it must keep its color-square class */
   color: white;
 }
 
+.available-to-move {
+  background-color: rgba(0, 0, 255, 0.405);
+}
+
 .white-square {
   background-color: white;
   color: black;

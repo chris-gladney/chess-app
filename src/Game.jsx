@@ -26,6 +26,11 @@ function Game() {
       }}
     >
       <Board />
+      <button
+        onClick={() => {
+          console.log(pieces);
+        }}
+      >Show Pieces Array</button>
     </PiecesContext.Provider>
   );
 }
