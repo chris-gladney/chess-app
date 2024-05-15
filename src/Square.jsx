@@ -97,12 +97,20 @@ function Square({ square, squareColor }) {
                   previewMoves.forEach((moveObject) => {
                     if (moveObject.move === square) {
                       moveObject.squaresToUpdate.forEach((square) => {
-                        // setSquares((prevSquaresArray) => {
-                        // })
+                        setSquares((prevSquaresArray) => {
+                          prevSquaresArray[square.square].occupied =
+                            square.occupied;
+                          prevSquaresArray[square.square].specialMoves =
+                            square.specialMoves;
+
+                          return prevSquaresArray;
+                        });
                       });
                     }
                   });
-                  console.log(previewMoves[0].squaresToUpdate);
+                  setPreviewMoves([]);
+                  setPreviewSquares([]);
+                  turn === "white" ? setTurn("black") : setTurn("white");
                 }
               : undefined
           }

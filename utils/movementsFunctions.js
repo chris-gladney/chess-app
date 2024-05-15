@@ -31,10 +31,14 @@ export const whitePawnMovement = (square, squareObject, squares) => {
     move: `${square[0]}${Number(square[1]) + 1}`,
     squaresToUpdate: [
       {
-        [`${square[0]}${Number(square[1]) + 1}`]: {
-          occupied: squareObject.occupied,
-          specialMoves: [],
-        },
+        square: square,
+        occupied: false,
+        specialMoves: [],
+      },
+      {
+        square: `${square[0]}${Number(square[1]) + 1}`,
+        occupied: squareObject.occupied,
+        specialMoves: [],
       },
     ],
   });
@@ -44,16 +48,19 @@ export const whitePawnMovement = (square, squareObject, squares) => {
       move: specialMove,
       squaresToUpdate: [
         {
-          [specialMove]: {
-            occupied: squareObject.occupied,
-            specialMoves: [],
-          },
+          square: square,
+          occupied: false,
+          specialMoves: [],
         },
         {
-          [`${specialMove[0]}${Number(specialMove[1]) - 1}`]: {
-            occupied: false,
-            specialMoves: ["en passant"],
-          },
+          square: specialMove,
+          occupied: squareObject.occupied,
+          specialMoves: [],
+        },
+        {
+          square: `${specialMove[0]}${Number(specialMove[1]) - 1}`,
+          occupied: false,
+          specialMoves: ["en passant"],
         },
       ],
     });
@@ -64,10 +71,16 @@ export const whitePawnMovement = (square, squareObject, squares) => {
       move: `${files[files.indexOf(square[0]) - 1]}${Number(square[1]) + 1}`,
       squaresToUpdate: [
         {
-          [`${files[files.indexOf(square[0]) - 1]}${Number(square[1]) + 1}`]: {
-            occupied: squareObject.occupied,
-            specialMoves: [],
-          },
+          square: square,
+          occupied: false,
+          specialMoves: [],
+        },
+        {
+          square: `${files[files.indexOf(square[0]) - 1]}${
+            Number(square[1]) + 1
+          }`,
+          occupied: squareObject.occupied,
+          specialMoves: [],
         },
       ],
     });
@@ -75,10 +88,16 @@ export const whitePawnMovement = (square, squareObject, squares) => {
       move: `${files[files.indexOf(square[0]) + 1]}${Number(square[1]) + 1}`,
       squaresToUpdate: [
         {
-          [`${files[files.indexOf(square[0]) + 1]}${Number(square[1]) + 1}`]: {
-            occupied: squareObject.occupied,
-            specialMoves: [],
-          },
+          square: square,
+          occupied: false,
+          specialMoves: [],
+        },
+        {
+          square: `${files[files.indexOf(square[0]) + 1]}${
+            Number(square[1]) + 1
+          }`,
+          occupied: squareObject.occupied,
+          specialMoves: [],
         },
       ],
     });
@@ -87,10 +106,16 @@ export const whitePawnMovement = (square, squareObject, squares) => {
       move: `${files[files.indexOf(square[0]) + 1]}${Number(square[1]) + 1}`,
       squaresToUpdate: [
         {
-          [`${files[files.indexOf(square[0]) + 1]}${Number(square[1]) + 1}`]: {
-            occupied: squareObject.occupied,
-            specialMoves: [],
-          },
+          square: square,
+          occupied: false,
+          specialMoves: [],
+        },
+        {
+          square: `${files[files.indexOf(square[0]) + 1]}${
+            Number(square[1]) + 1
+          }`,
+          occupied: squareObject.occupied,
+          specialMoves: [],
         },
       ],
     });
@@ -99,10 +124,16 @@ export const whitePawnMovement = (square, squareObject, squares) => {
       move: `${files[files.indexOf(square[0]) - 1]}${Number(square[1]) + 1}`,
       squaresToUpdate: [
         {
-          [`${files[files.indexOf(square[0]) - 1]}${Number(square[1]) + 1}`]: {
-            occupied: squareObject.occupied,
-            specialMoves: [],
-          },
+          square: square,
+          occupied: false,
+          specialMoves: [],
+        },
+        {
+          square: `${files[files.indexOf(square[0]) - 1]}${
+            Number(square[1]) + 1
+          }`,
+          occupied: squareObject.occupied,
+          specialMoves: [],
         },
       ],
     });
