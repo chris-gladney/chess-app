@@ -1,83 +1,120 @@
+import { useContext } from "react";
 import { PiecesContext } from "./Game";
-import { useContext, useEffect, useState } from "react";
-import Piece from "./Piece";
-import { calculateSpacesWhiteCanMove } from "../utils/movementsFunctions";
+import {
+  whitePawnMovement,
+  blackPawnMovement,
+  rookMovement,
+  knightMovement,
+  bishopMovement,
+  kingMovement,
+  queenMovement,
+} from "../utils/movementsFunctions";
 
-function Square({ letterSquare, numberSquare, colorStart }) {
+function Square({ square, squareColor }) {
   const {
-    pieces,
-    setPieces,
-    availableSpaces,
-    setAvailableSpaces,
-    pieceObjectToMove,
-    setPieceObjectToMove,
+    squares,
+    setSquares,
+    previewMoves,
+    setPreviewMoves,
     turn,
     setTurn,
+    previewSquares,
+    setPreviewSquares,
   } = useContext(PiecesContext);
-  const [occupied, setOccupied] = useState(false);
-  const [pieceInfo, setPieceInfo] = useState(null);
-
-  useEffect(() => {
-    pieces.forEach((piece) => {
-      if (piece.square === `${letterSquare}${numberSquare}`) {
-        setOccupied({ piece: piece.piece, decimalCode: piece.decimalCode });
-        setPieceInfo(piece);
-      }
-    });
-  }, [turn]);
 
   return (
     <div
-      className={`${
-        availableSpaces.includes(`${letterSquare}${numberSquare}`)
-          ? "available-to-move"
-          : colorStart
-      } square ${occupied ? occupied.piece : ""} ${
-        occupied ? "used" : "unused"
-      } ${letterSquare}${numberSquare}`}
-      onClick={
-        occupied
-          ? () => {
-              if (availableSpaces.length === 0) {
-                setAvailableSpaces(
-                  calculateSpacesWhiteCanMove(pieceInfo, pieces)
-                );
-                setPieceObjectToMove(pieceInfo);
-              } else {
-                setAvailableSpaces([]);
-                setPieceObjectToMove({});
-              }
-            }
-          : availableSpaces.includes(`${letterSquare}${numberSquare}`)
-          ? () => {
-              const pieceObjectToCompare = pieceObjectToMove;
-              setAvailableSpaces([]);
-              setPieceObjectToMove({});
-              for (let i = 0; i < pieces.length; i++) {
-                if (pieces[i].square === pieceObjectToCompare.square && pieceObjectToCompare.piece === pieces[i].piece) {
-                  setPieces((originalPieceArray) => {
-                    for (let j = 0; j < originalPieceArray.length; j++) {
-                      if (originalPieceArray[j].square === pieces[i].square) {
-                        originalPieceArray[
-                          j
-                        ].square = `${letterSquare}${numberSquare}`;
-                        break;
-                      }
-                    }
-                    return originalPieceArray;
-                  });
-                  break;
-                }
-              }
-              turn === "white" ? setTurn("black") : setTurn("white");
-            }
-          : undefined
+      className={
+        previewSquares.includes(square)
+          ? `${squareColor}-square preview-square`
+          : `${squareColor}-square`
       }
+      onClick={previewSquares.includes(square) ? () => {} : undefined}
     >
-      {occupied ? (
-        <Piece HTMLdecimal={occupied.decimalCode} piece={occupied.piece} />
+      {square[0] === "A" || square[1] === "1" ? (
+        <p className="square-coordinate">{square}</p>
       ) : (
         ""
+      )}
+      {squares[square].occupied ? (
+        <p
+          onClick={
+            squares[square].occupied.slice(6, 10) === "pawn" &&
+            squares[square].occupied.slice(0, 5) === "white"
+              ? () => {
+                  const previewMovesArray = [];
+                  const previewSquaresArray = [];
+                  whitePawnMovement(square, squares[square], squares).forEach(
+                    (moveObject) => {
+                      previewMovesArray.push(moveObject);
+                      previewSquaresArray.push(moveObject.move);
+                    }
+                  );
+                  if (previewMoves.length > 0) {
+                    setPreviewMoves([]);
+                    setPreviewSquares([]);
+                  } else {
+                    setPreviewMoves(previewMovesArray);
+                    setPreviewSquares(previewSquaresArray);
+                  }
+                }
+              : squares[square].occupied.slice(6, 10) === "pawn" &&
+                squares[square].occupied.slice(0, 5) === "black"
+              ? () => {
+                  blackPawnMovement();
+                }
+              : squares[square].occupied.slice(6, 10) === "rook"
+              ? () => {
+                  rookMovement();
+                }
+              : squares[square].occupied.slice(6, 12) === "knight"
+              ? () => {
+                  knightMovement();
+                }
+              : squares[square].occupied.slice(6, 12) === "bishop"
+              ? () => {
+                  bishopMovement();
+                }
+              : squares[square].occupied.slice(6, 11) === "queen"
+              ? () => {
+                  queenMovement();
+                }
+              : squares[square].occupied.slice(6, 10) === "king"
+              ? () => {
+                  kingMovement();
+                }
+              : undefined
+          }
+        >
+          {squares[square].occupied}
+        </p>
+      ) : (
+        <div
+          className="unoccupied-square"
+          onClick={
+            previewSquares.includes(square)
+              ? () => {
+                  previewMoves.forEach((moveObject) => {
+                    if (moveObject.move === square) {
+                      moveObject.squaresToUpdate.forEach((square) => {
+                        setSquares((prevSquaresArray) => {
+                          prevSquaresArray[square.square].occupied =
+                            square.occupied;
+                          prevSquaresArray[square.square].specialMoves =
+                            square.specialMoves;
+
+                          return prevSquaresArray;
+                        });
+                      });
+                    }
+                  });
+                  setPreviewMoves([]);
+                  setPreviewSquares([]);
+                  turn === "white" ? setTurn("black") : setTurn("white");
+                }
+              : undefined
+          }
+        ></div>
       )}
     </div>
   );

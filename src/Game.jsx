@@ -1,26 +1,28 @@
-import { createContext, useState } from "react";
+import { createContext, useEffect, useState } from "react";
 import Board from "./Board";
-import piecesInfo from "../utils/piecesInfo";
+import squaresInfo from "../utils/squaresInfo";
 
 export const PiecesContext = createContext(null);
 
 function Game() {
-  const [pieces, setPieces] = useState([...piecesInfo]);
-  const [pieceObjectToMove, setPieceObjectToMove] = useState({});
-  const [availableSpaces, setAvailableSpaces] = useState([]);
+  const [squares, setSquares] = useState(squaresInfo);
   const [turn, setTurn] = useState("white");
+  const [previewMoves, setPreviewMoves] = useState([]);
+  const [previewSquares, setPreviewSquares] = useState([]);
+
+  useEffect(() => {}, [squares]);
 
   return (
     <PiecesContext.Provider
       value={{
-        pieces,
-        setPieces,
-        availableSpaces,
-        setAvailableSpaces,
-        pieceObjectToMove,
-        setPieceObjectToMove,
+        squares,
+        setSquares,
         turn,
         setTurn,
+        previewMoves,
+        setPreviewMoves,
+        previewSquares,
+        setPreviewSquares,
       }}
     >
       <Board />
