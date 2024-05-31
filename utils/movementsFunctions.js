@@ -29,6 +29,7 @@ export const whitePawnMovement = (square, squareObject, squares) => {
 
   movesNotTakingToCheck.push({
     move: `${square[0]}${Number(square[1]) + 1}`,
+    moveFrom: square,
     squaresToUpdate: [
       {
         square: square,
@@ -46,6 +47,7 @@ export const whitePawnMovement = (square, squareObject, squares) => {
   for (const specialMove of squareObject.specialMoves) {
     movesNotTakingToCheck.push({
       move: specialMove,
+      moveFrom: square,
       squaresToUpdate: [
         {
           square: square,
@@ -69,6 +71,7 @@ export const whitePawnMovement = (square, squareObject, squares) => {
   if (files.indexOf(square[0]) > 0 && files.indexOf(square[0]) < 7) {
     movesTakingToCheck.push({
       move: `${files[files.indexOf(square[0]) - 1]}${Number(square[1]) + 1}`,
+      moveFrom: square,
       squaresToUpdate: [
         {
           square: square,
@@ -86,6 +89,7 @@ export const whitePawnMovement = (square, squareObject, squares) => {
     });
     movesTakingToCheck.push({
       move: `${files[files.indexOf(square[0]) + 1]}${Number(square[1]) + 1}`,
+      moveFrom: square,
       squaresToUpdate: [
         {
           square: square,
@@ -104,6 +108,7 @@ export const whitePawnMovement = (square, squareObject, squares) => {
   } else if (files.indexOf(square[0]) === 0) {
     movesTakingToCheck.push({
       move: `${files[files.indexOf(square[0]) + 1]}${Number(square[1]) + 1}`,
+      moveFrom: square,
       squaresToUpdate: [
         {
           square: square,
@@ -122,6 +127,7 @@ export const whitePawnMovement = (square, squareObject, squares) => {
   } else if (files.indexOf(square[0]) === 7) {
     movesTakingToCheck.push({
       move: `${files[files.indexOf(square[0]) - 1]}${Number(square[1]) + 1}`,
+      moveFrom: square,
       squaresToUpdate: [
         {
           square: square,
