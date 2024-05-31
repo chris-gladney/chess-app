@@ -9,6 +9,7 @@ import {
   kingMovement,
   queenMovement,
 } from "../utils/movementsFunctions";
+import { checkMovesForWhite } from "../utils/checkFunctions";
 
 function Square({ square, squareColor }) {
   const {
@@ -46,8 +47,10 @@ function Square({ square, squareColor }) {
                   const previewSquaresArray = [];
                   whitePawnMovement(square, squares[square], squares).forEach(
                     (moveObject) => {
-                      previewMovesArray.push(moveObject);
-                      previewSquaresArray.push(moveObject.move);
+                      if (checkMovesForWhite(squares, moveObject)) {
+                        previewMovesArray.push(moveObject);
+                        previewSquaresArray.push(moveObject.move);
+                      }
                     }
                   );
                   if (previewMoves.length > 0) {
