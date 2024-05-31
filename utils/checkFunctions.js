@@ -215,7 +215,18 @@ export const checkMovesForWhite = (squares, moveObject) => {
   });
 
   for (const line of linesToKing) {
-    if (line.includes(moveObject.moveFrom) && !line.includes(moveObject.move)) {
+    let numberOfWhitePiecesInWayOfKing = 0;
+    line.forEach((coordinate) => {
+      if (whiteOccupiedSpaces.includes(coordinate)) {
+        numberOfWhitePiecesInWayOfKing++;
+      }
+    });
+
+    if (
+      numberOfWhitePiecesInWayOfKing < 1 &&
+      line.includes(moveObject.moveFrom) &&
+      !line.includes(moveObject.move)
+    ) {
       return false;
     }
   }
