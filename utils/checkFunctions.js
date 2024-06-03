@@ -222,8 +222,12 @@ export const checkMovesForWhite = (squares, moveObject) => {
       }
     });
 
+
+    // The condition below must be less than three as the king is 
+    // included in the numberOfWhitePiecesInWayOfKing
+     
     if (
-      numberOfWhitePiecesInWayOfKing < 1 &&
+      numberOfWhitePiecesInWayOfKing < 3 &&
       line.includes(moveObject.moveFrom) &&
       !line.includes(moveObject.move)
     ) {
