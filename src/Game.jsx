@@ -10,7 +10,7 @@ function Game() {
   const [previewMoves, setPreviewMoves] = useState([]);
   const [previewSquares, setPreviewSquares] = useState([]);
 
-  useEffect(() => {}, [squares]);
+  useEffect(() => {}, []);
 
   return (
     <PiecesContext.Provider

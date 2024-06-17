@@ -50,6 +50,7 @@ has, it must keep its color-square class */
 
 .preview-square {
   background-color: rgba(132, 132, 255, 0.315);
+  z-index: 1;
 }
 
 .unoccupied-square {
