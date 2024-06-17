@@ -30,6 +30,11 @@ function Board() {
           />
         );
       })}
+      <button
+        onClick={() => {
+          console.log(squares, "<<< squares");
+        }}
+      >Click Here For Squares Info!</button>
     </div>
   );
 }

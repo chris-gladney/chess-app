@@ -45,7 +45,7 @@ export const checkMovesForWhite = (squares, moveObject) => {
       // >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
       // Up and right
 
-      const upAndRight = [];
+      const upAndRight = [{ originSquare: square }];
 
       square = `${files[files.indexOf(square[0]) + 1]}${Number(square[1]) + 1}`;
 
@@ -62,7 +62,7 @@ export const checkMovesForWhite = (squares, moveObject) => {
       // >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
       // Down and right
 
-      const downAndRight = [];
+      const downAndRight = [{ originSquare: square }];
 
       square = `${files[files.indexOf(square[0]) + 1]}${Number(square[1] - 1)}`;
 
@@ -79,7 +79,7 @@ export const checkMovesForWhite = (squares, moveObject) => {
       // >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
       // Down and left
 
-      const downAndLeft = [];
+      const downAndLeft = [{ originSquare: square }];
 
       square = `${files[files.indexOf(square[0]) - 1]}${Number(square[1] - 1)}`;
 
@@ -96,7 +96,7 @@ export const checkMovesForWhite = (squares, moveObject) => {
       // >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
       // Up and left
 
-      const upAndLeft = [];
+      const upAndLeft = [{ originSquare: square }];
 
       square = `${files[files.indexOf(square[0]) - 1]}${Number(square[1]) + 1}`;
 
@@ -121,7 +121,7 @@ export const checkMovesForWhite = (squares, moveObject) => {
       // >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
       // Up
 
-      const up = [];
+      const up = [{ originSquare: square }];
 
       square = `${files[files.indexOf(square[0])]}${Number(square[1]) + 1}`;
 
@@ -136,7 +136,7 @@ export const checkMovesForWhite = (squares, moveObject) => {
       // >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
       // Right
 
-      const right = [];
+      const right = [{ originSquare: square }];
 
       square = `${files[files.indexOf(square[0]) + 1]}${Number(square[1])}`;
 
@@ -151,7 +151,7 @@ export const checkMovesForWhite = (squares, moveObject) => {
       // >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
       // Down
 
-      const down = [];
+      const down = [{ originSquare: square }];
 
       square = `${files[files.indexOf(square[0])]}${Number(square[1]) - 1}`;
 
@@ -166,7 +166,7 @@ export const checkMovesForWhite = (squares, moveObject) => {
       // >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
       // Left
 
-      const left = [];
+      const left = [{ originSquare: square }];
 
       square = `${files[files.indexOf(square[0]) - 1]}${Number(square[1])}`;
 
@@ -197,7 +197,10 @@ export const checkMovesForWhite = (squares, moveObject) => {
     blackPiece.linesToCheck.forEach((lineToCheck) => {
       const lineToKing = [];
 
-      for (const coordinate of lineToCheck) {
+      lineToKing.push(lineToCheck[0]);
+
+      for (let i = 1; i < lineToCheck.length; i++) {
+        const coordinate = lineToCheck[i];
         if (squares[coordinate].occupied === "white king") {
           lineToKing.push(coordinate);
           break;
@@ -222,14 +225,15 @@ export const checkMovesForWhite = (squares, moveObject) => {
       }
     });
 
-
-    // The condition below must be less than three as the king is 
+    // The condition below must be less than three as the king is
     // included in the numberOfWhitePiecesInWayOfKing
-     
+
+
     if (
       numberOfWhitePiecesInWayOfKing < 3 &&
       line.includes(moveObject.moveFrom) &&
-      !line.includes(moveObject.move)
+      !line.includes(moveObject.move) &&
+      line[0].originSquare !== moveObject.move
     ) {
       return false;
     }

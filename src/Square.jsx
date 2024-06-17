@@ -1,14 +1,17 @@
 import { useContext } from "react";
 import { PiecesContext } from "./Game";
-import {
-  whitePawnMovement,
-  blackPawnMovement,
-  rookMovement,
-  knightMovement,
-  bishopMovement,
-  kingMovement,
-  queenMovement,
-} from "../utils/movementsFunctions";
+import { whitePawnMovement } from "../utils/whitePawnMovement";
+import { blackPawnMovement } from "../utils/blackPawnMovement";
+import { whiteRookMovement } from "../utils/whiteRookMovement";
+import { blackRookMovement } from "../utils/blackRookMovement";
+import { whiteKnightMovement } from "../utils/whiteKnightMovement";
+import { blackKnightMovement } from "../utils/blackKnightMovement";
+import { whiteBishopMovement } from "../utils/whiteBishopMovement";
+import { blackBishopMovement } from "../utils/blackBishopMovement";
+import { whiteQueenMovement } from "../utils/whiteQueenMovement";
+import { blackQueenMovement } from "../utils/blackQueenMovement";
+import { whiteKingMovement } from "../utils/whiteKingMovement";
+import { blackKingMovement } from "../utils/blackKingMovement";
 import { checkMovesForWhite } from "../utils/checkFunctions";
 
 function Square({ square, squareColor }) {
@@ -38,10 +41,11 @@ function Square({ square, squareColor }) {
         ""
       )}
       {squares[square].occupied ? (
-        <p
+        <div
           onClick={
             squares[square].occupied.slice(6, 10) === "pawn" &&
-            squares[square].occupied.slice(0, 5) === "white"
+            squares[square].occupied.slice(0, 5) === "white" && 
+            turn === "white"
               ? () => {
                   const previewMovesArray = [];
                   const previewSquaresArray = [];
@@ -62,35 +66,124 @@ function Square({ square, squareColor }) {
                   }
                 }
               : squares[square].occupied.slice(6, 10) === "pawn" &&
-                squares[square].occupied.slice(0, 5) === "black"
+                squares[square].occupied.slice(0, 5) === "black" && 
+                turn === "black"
               ? () => {
                   blackPawnMovement();
                 }
-              : squares[square].occupied.slice(6, 10) === "rook"
+              : squares[square].occupied.slice(6, 10) === "rook" &&
+                squares[square].occupied.slice(0, 5) === "white" && 
+                turn === "white"
               ? () => {
-                  rookMovement();
+                  const previewMovesArray = [];
+                  const previewSquaresArray = [];
+                  whiteRookMovement(square, squares[square], squares).forEach(
+                    (moveObject) => {
+                      if (checkMovesForWhite(squares, moveObject)) {
+                        previewMovesArray.push(moveObject);
+                        previewSquaresArray.push(moveObject.move);
+                      }
+                    }
+                  );
+                  if (previewMoves.length > 0) {
+                    setPreviewMoves([]);
+                    setPreviewSquares([]);
+                  } else {
+                    setPreviewMoves(previewMovesArray);
+                    setPreviewSquares(previewSquaresArray);
+                  }
                 }
-              : squares[square].occupied.slice(6, 12) === "knight"
+              : squares[square].occupied.slice(6, 10) === "rook" &&
+                squares[square].occupied.slice(0, 5) === "black" && 
+                turn === "black"
               ? () => {
-                  knightMovement();
+                  blackRookMovement();
                 }
-              : squares[square].occupied.slice(6, 12) === "bishop"
+              : squares[square].occupied.slice(6, 12) === "knight" &&
+                squares[square].occupied.slice(0, 5) === "white" && 
+                turn === "white"
               ? () => {
-                  bishopMovement();
+                  whiteKnightMovement();
                 }
-              : squares[square].occupied.slice(6, 11) === "queen"
+              : squares[square].occupied.slice(6, 12) === "knight" &&
+                squares[square].occupied.slice(0, 5) === "black" && 
+                turn === "black"
               ? () => {
-                  queenMovement();
+                  blackKnightMovement();
                 }
-              : squares[square].occupied.slice(6, 10) === "king"
+              : squares[square].occupied.slice(6, 12) === "bishop" &&
+                squares[square].occupied.slice(0, 5) === "white" && 
+                turn === "white"
               ? () => {
-                  kingMovement();
+                  const previewMovesArray = [];
+                  const previewSquaresArray = [];
+                  whiteBishopMovement(square, squares[square], squares).forEach(
+                    (moveObject) => {
+                      if (checkMovesForWhite(squares, moveObject)) {
+                        previewMovesArray.push(moveObject);
+                        previewSquaresArray.push(moveObject.move);
+                      }
+                    }
+                  );
+                  if (previewMoves.length > 0) {
+                    setPreviewMoves([]);
+                    setPreviewSquares([]);
+                  } else {
+                    setPreviewMoves(previewMovesArray);
+                    setPreviewSquares(previewSquaresArray);
+                  }
+                }
+              : squares[square].occupied.slice(6, 12) === "bishop" &&
+                squares[square].occupied.slice(0, 5) === "black" && 
+                turn === "black"
+              ? () => {
+                  blackBishopMovement();
+                }
+              : squares[square].occupied.slice(6, 11) === "queen" &&
+                squares[square].occupied.slice(0, 5) === "white" && 
+                turn === "white"
+              ? () => {
+                const previewMovesArray = [];
+                const previewSquaresArray = [];
+                whiteQueenMovement(square, squares[square], squares).forEach(
+                  (moveObject) => {
+                    if (checkMovesForWhite(squares, moveObject)) {
+                      previewMovesArray.push(moveObject);
+                      previewSquaresArray.push(moveObject.move);
+                    }
+                  }
+                );
+                if (previewMoves.length > 0) {
+                  setPreviewMoves([]);
+                  setPreviewSquares([]);
+                } else {
+                  setPreviewMoves(previewMovesArray);
+                  setPreviewSquares(previewSquaresArray);
+                }
+              }
+              : squares[square].occupied.slice(6, 11) === "queen" &&
+                squares[square].occupied.slice(0, 5) === "black" && 
+                turn === "black"
+              ? () => {
+                  blackQueenMovement();
+                }
+              : squares[square].occupied.slice(6, 10) === "king" &&
+                squares[square].occupied.slice(0, 5) === "white" && 
+                turn === "white"
+              ? () => {
+                  whiteKingMovement();
+                }
+              : squares[square].occupied.slice(6, 10) === "king" &&
+                squares[square].occupied.slice(0, 5) === "black" && 
+                turn === "black"
+              ? () => {
+                  blackKingMovement();
                 }
               : undefined
           }
         >
-          {squares[square].occupied}
-        </p>
+          <p>{squares[square].occupied}</p>
+        </div>
       ) : (
         <div
           className="unoccupied-square"
